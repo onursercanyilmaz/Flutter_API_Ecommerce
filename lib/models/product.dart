@@ -1,5 +1,5 @@
 class Product {
-  late int id;
+  late String id;
   late String category;
   late String title;
   late String image;
@@ -11,21 +11,21 @@ class Product {
 
   Product.formJson(Map json) {
     id = json["id"];
-    category = json["category"];
-    title = json["title"];
-    image = json["image"];
-    price = double.tryParse(json["price"].toString())!;
-    description = json["description"];
+    category = json["CategoryName"];
+    title = json["ProductName"];
+    image = json["Image"];
+    price = double.tryParse(json["Price"].toString())!;
+    description = json["Link"];
   }
 
   Map toJson() {
     return {
       "id": id,
-      "category": category,
-      "title": title,
-      "image": image,
-      "price": price,
-      "description": description
+      "CategoryName": category,
+      "ProductName": title,
+      "Image": image,
+      "Price": price,
+      "Link": description
     };
   }
 }

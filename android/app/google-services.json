@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "550273034771",
+    "firebase_url": "https://fenerium-flutter-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "fenerium-flutter",
+    "storage_bucket": "fenerium-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550273034771:android:6038c25fe27d94a2ca2de6",
+        "android_client_info": {
+          "package_name": "com.example.ecommerceosy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550273034771-29kefe9h0bon4r42nd3ek4i99nsvknin.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCg1Qys1kRbFrUwVfw2hRmr7hFHm0IDl94"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550273034771-29kefe9h0bon4r42nd3ek4i99nsvknin.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550273034771:android:cd8668d6c430374aca2de6",
+        "android_client_info": {
+          "package_name": "com.example.feneriumflutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550273034771-29kefe9h0bon4r42nd3ek4i99nsvknin.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCg1Qys1kRbFrUwVfw2hRmr7hFHm0IDl94"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550273034771-29kefe9h0bon4r42nd3ek4i99nsvknin.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

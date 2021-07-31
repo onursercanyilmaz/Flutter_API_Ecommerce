@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:ecommerceosy/models/category.dart';
 import 'package:ecommerceosy/models/product.dart';
+import 'package:ecommerceosy/services/api/category_api.dart';
 import 'package:ecommerceosy/services/api/product_api.dart';
 import 'package:ecommerceosy/widgets/category_list_widget.dart';
 import 'package:ecommerceosy/widgets/product_list_widget.dart';
@@ -26,25 +27,18 @@ class _CategoriesTabState extends State{
 
   @override
   void initState() {
-    //getCategoriesFromApi();
-    getProducts();
+
+    getCategories();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Categories",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.redAccent,
-        centerTitle: true,
-      ),
+      backgroundColor: Color(0xff1D2F75),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Container(
+        child: Center(
           child:
           CategoryListWidget(categories),
 
@@ -52,59 +46,10 @@ class _CategoriesTabState extends State{
       ),
     );
   }
-  /*
-  void getCategoriesFromApi() {
-    CategoryApi.getCategories().then((response) {
-      setState(() {
-        Iterable list = json.decode(response
-            .body); // iterable iterasyon tasarım deseni, array list hepsi iterable
-        this.categories =
-            list.map((category) => Category.formJson(category)).toList();
-        getCategoryWidgets();
-      });
-    });
-  }*/
 
-  List<Widget> getCategoryWidgets() {
-    for (int i = 0; i < categories.length; i++) {
-      categoryWidgets.add(getCategoryWidget(categories[i]));
-    }
-    return categoryWidgets;
-  }
 
-  Widget getCategoryWidget(Category category) {
-    return Row(children: [
-      FlatButton(
-        child: Text(
-          category.categoryName,
-          style: const TextStyle(color: Colors.green),
-        ),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-            side: const BorderSide(color: Colors.green)),
-        onPressed: () {
-          getProductsByCategoryId(category);
-        },
 
-        /*color: DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: RadialGradient(
-              center: const Alignment(-0.5,-0.6),
-              radius: 0.15,
-               colors: <Color>[
-          const Color(0xFFEEEEEE),
-          const Color(0xFF111133),
-        ],
-        stops: <double>[0.9, 1.0],
-            ),
-          ),
-        ),*/
-      ),
-      const SizedBox(
-        width: 10,
-      ),
-    ]);
-  }
+
 
   void getProductsByCategoryId(Category category) {
     ProductApi.getProductsByCategoryId(category.id).then((response) {
@@ -118,13 +63,19 @@ class _CategoriesTabState extends State{
 
 
 
-  void getProducts() {
-    ProductApi.getProducts().then((response) {
+  void getCategories() {
+    CategoryApi.getCategories().then((response) {
       setState(() {
         Iterable list = json.decode(response.body);
-        products =
-            list.map((product) => Product.formJson(product)).toList();
+        categories =
+            list.map((category) => Category.formJson(category)).toList();
       });
     });
+  }
+
+  @override
+  void dispose() {
+   getCategories();
+    super.dispose();
   }
 }

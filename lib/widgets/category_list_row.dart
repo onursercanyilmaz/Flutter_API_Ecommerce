@@ -1,6 +1,5 @@
 import 'package:ecommerceosy/models/category.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerceosy/models/product.dart';
 
 class CategoryListRowWidget extends StatelessWidget {
   Category category;
@@ -8,22 +7,29 @@ class CategoryListRowWidget extends StatelessWidget {
   CategoryListRowWidget(this.category, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return buildProductItemCard(context);
+    return buildCategoryItemCard(context);
   }
 
-  Widget buildProductItemCard(BuildContext context) {
+  Widget buildCategoryItemCard(BuildContext context) {
     return InkWell(
-      child: Card(
-        child: ListView(
+      onTap: (){},
 
+      child: Card(
+        color: Color(0xffEDEEF0),
+        child: ListView(
+          primary: false,
           children: [
             SizedBox(
-              child: Image.network("https://i2.wp.com/pazar.evrimagaci.org/wp-content/uploads/2020/11/DUNE-SETI.png?fit=2000%2C2000&ssl=1"),//Image.network(category.image),
+              child: Image.network(category.image, alignment: Alignment.bottomCenter,),
               height: 105.0,
               width: MediaQuery.of(context).size.width / 2,
             ),
-             Center(child:Text(category.categoryName)),
-
+            Center(
+                child: Text(
+              category.categoryName.toString(),
+              textAlign: TextAlign.justify,
+              style: const TextStyle(fontSize: 18.0, color: Colors.blue),
+            )),
           ],
         ),
       ),

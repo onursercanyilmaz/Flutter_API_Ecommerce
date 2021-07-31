@@ -4,18 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
-class RegisterPage extends StatefulWidget {
+class RegisterScreen extends StatefulWidget {
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,207 +29,272 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(children: [
-                  Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.vertical(
-                            bottom: Radius.circular(60.0)),
-                        child: Container(
-                          height: 100.0,
-                          width: double.infinity,
-                          color: Colors.amberAccent.shade400,
-                          child: Center(
-                            child: SvgPicture.network(
-                                "https://fenerium.com/images/logo.svg"),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 75),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Container(
-                            width: 150,
-                            height: 150,
-                            child: Center(
-                              child: Image.network(
-                                  "https://upload.wikimedia.org/wikipedia/tr/thumb/8/85/200px-Fenerbah%C3%A7e.png/800px-200px-Fenerbah%C3%A7e.png"),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ]),
-                Stack(
+            child: SingleChildScrollView(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: const BorderRadius.vertical(
+                              bottom: Radius.circular(60.0)),
+                          child: Container(
+                            height: 150.0,
+                            width: double.infinity,
+                            color: Color(0xffCC222B),
+                            child: Center(
+                              child:
+                                  Image.asset("lib/assets/jcommerceWhite.png"),
+
+                              /*SvgPicture.network(
+                         "https://fenerium.com/images/logo.svg"),
+                     NetworkImage(
+                       "https://fenerium.com/assets/img/subscribe-bg-img.png"), */
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 115),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff1D2F75),
+                                    borderRadius: BorderRadius.circular(100)),
+                                width: 150,
+                                height: 150,
+                                child: Image.network(
+                                  "https://img.icons8.com/ios/452/edit-user-male.png",
+                                  color: Colors.white,
+                                  cacheWidth: 80,
+                                )),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    Stack(
+                      children: [
+                        ClipRRect(
+                          child: Container(
+                              margin:
+                                  const EdgeInsets.only(left: 30, right: 30),
+                              padding:
+                                  const EdgeInsets.only(left: 30, right: 30),
+                              color: const Color(0xffCC222B),
+                              child: TextFormField(
+                                keyboardType: TextInputType.name,
+                                controller: _nameController,
+                                cursorColor: Colors.white,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                                decoration: const InputDecoration(
+                                    hintStyle:
+                                        TextStyle(color: Color(0xffff9898)),
+                                    filled: true,
+                                    fillColor: Color(0xffCC222B),
+                                    focusColor: Color(0xffCC222B),
+                                    hoverColor: Color(0xffe55c63),
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                    contentPadding: EdgeInsets.only(
+                                        left: 15,
+                                        bottom: 11,
+                                        top: 11,
+                                        right: 15),
+                                    hintText: "Ad Soyad"),
+                              )),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(top: 50),
+                            child: Align(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 30, right: 30),
+                                    padding: const EdgeInsets.only(
+                                        left: 30, right: 30),
+                                    color: const Color(0xffCC222B),
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.name,
+                                      controller: _emailController,
+                                      cursorColor: Colors.white,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                      decoration: const InputDecoration(
+                                          hintStyle: TextStyle(
+                                              color: Color(0xffff9898)),
+                                          filled: true,
+                                          fillColor: Color(0xffCC222B),
+                                          focusColor: Color(0xffCC222B),
+                                          hoverColor: Color(0xffe55c63),
+                                          border: InputBorder.none,
+                                          enabledBorder: InputBorder.none,
+                                          contentPadding: EdgeInsets.only(
+                                              left: 15,
+                                              bottom: 11,
+                                              top: 11,
+                                              right: 15),
+                                          hintText: "Email"),
+                                    )),
+                              ),
+                            )),
+                        Padding(
+                            padding: const EdgeInsets.only(top: 100),
+                            child: Align(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 30, right: 30),
+                                    padding: const EdgeInsets.only(
+                                        left: 30, right: 30),
+                                    color: const Color(0xffCC222B),
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.name,
+                                      controller: _passwordController,
+                                      cursorColor: Colors.white,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                      decoration: const InputDecoration(
+                                          hintStyle: TextStyle(
+                                              color: Color(0xffff9898)),
+                                          filled: true,
+                                          fillColor: Color(0xffCC222B),
+                                          focusColor: Color(0xffCC222B),
+                                          hoverColor: Color(0xffe55c63),
+                                          border: InputBorder.none,
+                                          enabledBorder: InputBorder.none,
+                                          contentPadding: EdgeInsets.only(
+                                              left: 15,
+                                              bottom: 11,
+                                              top: 11,
+                                              right: 15),
+                                          hintText: "Şifre"),
+                                    )),
+                              ),
+                            )),
+                        Padding(
+                            padding: const EdgeInsets.only(top: 150),
+                            child: Align(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 30, right: 30),
+                                    padding: const EdgeInsets.only(
+                                        left: 30, right: 30),
+                                    color: const Color(0xffCC222B),
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.name,
+                                      controller: _phoneController,
+                                      cursorColor: Colors.white,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                      decoration: const InputDecoration(
+                                          hintStyle: TextStyle(
+                                              color: Color(0xffff9898)),
+                                          filled: true,
+                                          fillColor: Color(0xffCC222B),
+                                          focusColor: Color(0xffCC222B),
+                                          hoverColor: Color(0xffe55c63),
+                                          border: InputBorder.none,
+                                          enabledBorder: InputBorder.none,
+                                          contentPadding: EdgeInsets.only(
+                                              left: 15,
+                                              bottom: 11,
+                                              top: 11,
+                                              right: 15),
+                                          hintText: "Telefon"),
+                                    )),
+                              ),
+                            )),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(40),
                       child: Container(
-                          margin: const EdgeInsets.only(left: 30, right: 30),
-                          padding: const EdgeInsets.only(left: 30, right: 30),
-                          color: Colors.black12,
-                          child: TextFormField(
-                            keyboardType: TextInputType.name,
-                            controller: _nameController,
-                            cursorColor: Colors.black,
-                            decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                contentPadding: EdgeInsets.only(
-                                    left: 15, bottom: 11, top: 11, right: 15),
-                                hintText: "Ad Soyad"),
-                          )),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.only(top: 50),
-                        child: Align(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                                margin: const EdgeInsets.only(left: 30, right: 30),
-                                padding: const EdgeInsets.only(left: 30, right: 30),
-                                color: Colors.black12,
-                                child: TextFormField(
-                                  keyboardType: TextInputType.emailAddress,
-                                  controller: _emailController,
-                                  cursorColor: Colors.black,
-                                  decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      contentPadding: EdgeInsets.only(
-                                          left: 15,
-                                          bottom: 11,
-                                          top: 11,
-                                          right: 15),
-                                      hintText: "E-mail"),
-                                )),
-                          ),
-                        )),
-                    Padding(
-                        padding: const EdgeInsets.only(top: 100),
-                        child: Align(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                                margin: const EdgeInsets.only(left: 30, right: 30),
-                                padding: const EdgeInsets.only(left: 30, right: 30),
-                                color: Colors.black12,
-                                child: TextFormField(
-                                  obscureText: true,
-                                  keyboardType: TextInputType.visiblePassword,
-                                  controller: _passwordController,
-                                  cursorColor: Colors.black,
-                                  decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      contentPadding: EdgeInsets.only(
-                                          left: 15,
-                                          bottom: 11,
-                                          top: 11,
-                                          right: 15),
-                                      hintText: "Şifre"),
-                                )),
-                          ),
-                        )),
-                    Padding(
-                        padding: const EdgeInsets.only(top: 150),
-                        child: Align(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                                margin: EdgeInsets.only(left: 30, right: 30),
-                                padding: EdgeInsets.only(left: 30, right: 30),
-                                color: Colors.black12,
-                                child: TextFormField(
-                                  keyboardType: TextInputType.phone,
-                                  controller: _phoneController,
-                                  cursorColor: Colors.black,
-                                  decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      contentPadding: EdgeInsets.only(
-                                          left: 15,
-                                          bottom: 11,
-                                          top: 11,
-                                          right: 15),
-                                      hintText: "Telefon"),
-                                )),
-                          ),
-                        )),
-                  ],
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(40),
-                  child: Container(
-                    height: 40.0,
-                    width: 250,
-                    color: Colors.transparent,
-                    child: Center(
-                      child: ButtonTheme(
-                        minWidth: 400.0,
-                        height: 100.0,
-                        child: RaisedButton(
-                          color: Colors.white,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text(
-                            "Hesabın Var Mı?",
-                            style: TextStyle(
-                              fontFamily: "Rubik",
-                              fontSize: 18,
-                              color: Color(0xff1D2F75),
+                        height: 40.0,
+                        width: 250,
+                        color: Colors.transparent,
+                        child: Center(
+                          child: ButtonTheme(
+                            minWidth: 400.0,
+                            height: 100.0,
+                            child: RaisedButton(
+                              color: Colors.white,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text(
+                                "Hesabın Var Mı?",
+                                style: TextStyle(
+                                  fontFamily: "Rubik",
+                                  fontSize: 18,
+                                  color: Color(0xff1D2F75),
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                ClipRRect(
-                  borderRadius:
-                  const BorderRadius.vertical(top:  Radius.circular(60.0)),
-                  child: Container(
-                    height: 50.0,
-                    width: double.infinity,
-                    color: Colors.blue,
-                    child: Center(
-                      child: ButtonTheme(
-                        minWidth: 400.0,
-                        height: 100.0,
-                        child: RaisedButton(
-                          color: Colors.amberAccent.shade400,
-                          onPressed: () {
-                            registerShortCut();
-                          },
-                          child: const Text(
-                            "Kaydol",
-                            style: TextStyle(
-                              fontFamily: "Rubik",
-                              fontSize: 22,
-                              color: Color(0xff1D2F75),
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    SizedBox(
+                      width: 300,
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.elliptical(50, 50)),
+                        child: Container(
+                          height: 50.0,
+                          width: double.infinity,
+                          color: Colors.blue,
+                          child: Center(
+                            child: ButtonTheme(
+                              minWidth: 400.0,
+                              height: 100.0,
+                              child: RaisedButton(
+                                color: const Color(0xff1D2F75),
+                                onPressed: () {
+                                  // registerShortCut();
+                                },
+                                child: const Text(
+                                  "Kaydol",
+                                  style: TextStyle(
+                                    fontFamily: "Rubik",
+                                    fontSize: 22,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ],
+                  ]),
             ),
           ),
         ));
   }
 
-  void registerShortCut() {/*
+  void registerShortCut() {
+    /*
     _authService
         .register(_emailController.text, _passwordController.text,
         _nameController.text, _phoneController.text)
@@ -256,5 +319,6 @@ class _RegisterPageState extends State<RegisterPage> {
             );
           });
     });
-  */}
+  */
+  }
 }

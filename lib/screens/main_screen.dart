@@ -27,13 +27,8 @@ class MainScreen extends StatelessWidget {
                 Tab(icon: Icon(Icons.shopping_cart)),
               ],
             ),
-            title: const Center(
-              child: Text(
-                'J-Commerce',
-                style: TextStyle(
-                  fontFamily: "Rubik",
-                ),
-              ),
+            title:  Center(
+              child: Image.asset("lib/assets/jcommerceWhite.png", scale: 2),
             ),
           ),
           body: const TabBarView(

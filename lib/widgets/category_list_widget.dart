@@ -10,7 +10,7 @@ class CategoryListWidget extends StatefulWidget {
   List<Category> categories = <Category>[];
 
   CategoryListWidget(List<Category> categories, {Key? key}) : super(key: key) {
-    categories = categories;
+    this.categories = categories;
   }
 
   @override
@@ -22,11 +22,11 @@ class CategoryListWidget extends StatefulWidget {
 class _CategoryListWidgetState extends State<CategoryListWidget> {
   @override
   Widget build(BuildContext context) {
-    return buildProductList(context);
+    return buildCategoryList(context);
   }
 
   //RepaintBoundary ← NotificationListener<ScrollNotification> ← GlowingOverscrollIndicator ← Scrollable ← PrimaryScrollController ← GridView ← Expanded ← SizedBox ← Column ← ProductListWidget ← ⋯
-  Widget buildProductList(BuildContext context) {
+  Widget buildCategoryList(BuildContext context) {
     return
       Scrollbar(
         child: GridView.count(
