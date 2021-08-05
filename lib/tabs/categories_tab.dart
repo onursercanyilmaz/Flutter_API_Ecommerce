@@ -65,17 +65,20 @@ class _CategoriesTabState extends State{
 
   void getCategories() {
     CategoryApi.getCategories().then((response) {
-      setState(() {
-        Iterable list = json.decode(response.body);
-        categories =
-            list.map((category) => Category.formJson(category)).toList();
-      });
+
+      if (mounted)
+        {setState(() {
+          Iterable list = json.decode(response.body);
+          categories =
+              list.map((category) => Category.formJson(category)).toList();
+        });}
+
     });
   }
 
   @override
   void dispose() {
-   getCategories();
+   //getCategories();
     super.dispose();
   }
 }

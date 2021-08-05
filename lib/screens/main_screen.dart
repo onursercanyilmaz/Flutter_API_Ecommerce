@@ -1,3 +1,4 @@
+import 'package:ecommerceosy/blocs/cart_bloc.dart';
 import 'package:ecommerceosy/tabs/categories_tab.dart';
 import 'package:ecommerceosy/tabs/products_tab.dart';
 import 'package:ecommerceosy/tabs/cart_tab.dart';
@@ -7,18 +8,22 @@ import 'package:ecommerceosy/tabs/profile_tab.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget {
-  const MainScreen({Key? key}) : super(key: key);
+   final int selectedTab ;
+  const MainScreen( this.selectedTab, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
+
+
+
+    return DefaultTabController(
+        initialIndex: selectedTab,
         length: 5,
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: const Color(0xff1D2F75),
-            bottom: const TabBar(
+            bottom:  const TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.category_rounded)),
                 Tab(icon: Icon(Icons.view_module_rounded)),
@@ -31,17 +36,18 @@ class MainScreen extends StatelessWidget {
               child: Image.asset("lib/assets/jcommerceWhite.png", scale: 2),
             ),
           ),
-          body: const TabBarView(
+          body:  const TabBarView(
             children: [
               CategoriesTab(),
               ProductsTab(),
               SearchTab(),
-              CartTab(),
               ProfileTab(),
+              CartTab(),
+
             ],
           ),
         ),
-      ),
-    );
+      );
   }
+
 }

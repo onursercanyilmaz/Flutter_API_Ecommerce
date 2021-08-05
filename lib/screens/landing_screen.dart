@@ -41,7 +41,7 @@ class _LandingScreenState extends State<LandingScreen> {
                 if (_user == null) {
                   return LoginScreen();
                 } else {
-                  return MainScreen();
+                  return MainScreen(0);
                 }
               }
 

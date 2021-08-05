@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:ecommerceosy/blocs/cart_bloc.dart';
+import 'package:ecommerceosy/blocs/product_bloc.dart';
+import 'package:ecommerceosy/models/cart.dart';
 import 'package:ecommerceosy/models/category.dart';
 import 'package:ecommerceosy/models/product.dart';
 import 'package:ecommerceosy/services/api/product_api.dart';
@@ -45,10 +48,6 @@ class _ProductsTabState extends State{
     );
   }
 
-
-
-
-
   void getProductsByCategoryId(Category category) {
     ProductApi.getProductsByCategoryId(category.id).then((response) {
       setState(() {
@@ -59,15 +58,22 @@ class _ProductsTabState extends State{
     });
   }
 
-
-
   void getProducts() {
     ProductApi.getProducts().then((response) {
-      setState(() {
-        Iterable list = json.decode(response.body);
-        products =
-            list.map((product) => Product.formJson(product)).toList();
-      });
+
+      if(mounted)
+        {setState(() {
+          Iterable list = json.decode(response.body);
+          products =
+              list.map((product) => Product.formJson(product)).toList();
+        });}
+
     });
+  }
+
+  @override
+  void dispose() {
+    //getProducts();
+    super.dispose();
   }
 }

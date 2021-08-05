@@ -1,17 +1,17 @@
 class Product {
   late String id;
-  late String category;
+ // late String category;
   late String title;
   late String image;
   late double price;
   late String description;
 
-  Product(this.id, this.category, this.title, this.image,
+  Product(this.id, this.title, this.image,
       this.price, this.description);
 
   Product.formJson(Map json) {
     id = json["id"];
-    category = json["CategoryName"];
+    //category = json["CategoryName"];
     title = json["ProductName"];
     image = json["Image"];
     price = double.tryParse(json["Price"].toString())!;
@@ -21,7 +21,7 @@ class Product {
   Map toJson() {
     return {
       "id": id,
-      "CategoryName": category,
+      //"CategoryName": category,
       "ProductName": title,
       "Image": image,
       "Price": price,
