@@ -112,7 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               )),
                         ),
                         Padding(
-                            padding: const EdgeInsets.only(top: 50),
+                            padding: EdgeInsets.only(top: 50),
                             child: Align(
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
@@ -159,6 +159,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         left: 30, right: 30),
                                     color: const Color(0xffCC222B),
                                     child: TextFormField(
+                                      obscureText: true,
                                       keyboardType: TextInputType.name,
                                       controller: _passwordController,
                                       cursorColor: Colors.white,

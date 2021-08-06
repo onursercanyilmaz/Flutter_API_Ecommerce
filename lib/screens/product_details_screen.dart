@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:ecommerceosy/models/cart.dart';
 import 'package:ecommerceosy/models/product.dart';
 import 'package:ecommerceosy/blocs/cart_bloc.dart';
+import 'package:ecommerceosy/screens/admin/edit_product_screen.dart';
 import 'package:ecommerceosy/screens/main_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -63,8 +66,8 @@ class ProductDetailsScreen extends StatelessWidget {
                             width: double.infinity,
                             color: const Color(0xffEDEEF0),
                             child: Center(
-                              child: Image.network(
-                                product.image,
+                              child: Image.memory(
+                                base64Decode(product.image),
                                 alignment: Alignment.topCenter,
                                 scale: 2,
                               ),
@@ -149,6 +152,79 @@ class ProductDetailsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      width: 300,
+                      child: ClipRRect(
+                        borderRadius:
+                        const BorderRadius.all(Radius.elliptical(50, 50)),
+                        child: Container(
+                          height: 50.0,
+                          width: double.infinity,
+                          color: Colors.blue,
+                          child: Center(
+                            child: ButtonTheme(
+                              minWidth: 400.0,
+                              height: 100.0,
+                              child: RaisedButton(
+                                color: Colors.white,
+                                child: const Text(
+                                  "Ürünü Düzenle",
+                                  style: TextStyle(
+                                    fontFamily: "Rubik",
+                                    fontSize: 22,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) =>  EditProductScreen(),
+                                      ));
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      width: 300,
+                      child: ClipRRect(
+                        borderRadius:
+                        const BorderRadius.all(Radius.elliptical(50, 50)),
+                        child: Container(
+                          height: 50.0,
+                          width: double.infinity,
+                          color: Colors.blue,
+                          child: Center(
+                            child: ButtonTheme(
+                              minWidth: 400.0,
+                              height: 100.0,
+                              child: RaisedButton(
+                                color: Colors.white,
+                                child: const Text(
+                                  "Ürünü Sil",
+                                  style: TextStyle(
+                                    fontFamily: "Rubik",
+                                    fontSize: 22,
+                                    color: Colors.redAccent,
+                                  ),
+                                ),
+                                onPressed: () {
+                                 deleteProduct();
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ]),
             ),
           ),
@@ -165,7 +241,7 @@ class ProductDetailsScreen extends StatelessWidget {
               child: Wrap(
                 children: [
                   ListTile(
-                      gith
+
                       title: const Text('Sepete Eklendi',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -175,7 +251,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) =>  const MainScreen(4),
+                          MaterialPageRoute(builder: (context) =>   MainScreen(4),
                         ));
 
 
@@ -186,4 +262,6 @@ class ProductDetailsScreen extends StatelessWidget {
           );
         });
   }
+
+  void deleteProduct() {}
 }

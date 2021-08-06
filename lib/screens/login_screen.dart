@@ -1,9 +1,15 @@
 import 'package:ecommerceosy/screens/user/register_screen.dart';
+import 'package:ecommerceosy/services/api/product_api.dart';
 import 'package:ecommerceosy/services/auth.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'main_screen.dart';
+
+final storage =  new FlutterSecureStorage();
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -15,6 +21,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
+
+  final _authService = AuthService();
+  final _productApi = ProductApi();
 
   @override
   Widget build(BuildContext context) {
@@ -128,13 +137,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                         left: 30, right: 30),
                                     color: const Color(0xffCC222B),
                                     child: TextFormField(
-                                      keyboardType: TextInputType.name,
+                                      obscureText: true,
+                                      keyboardType: TextInputType.visiblePassword,
                                       controller: _passwordController,
                                       cursorColor: Colors.white,
                                       style: const TextStyle(
                                         color: Colors.white,
                                       ),
                                       decoration: const InputDecoration(
+
                                           hintStyle: TextStyle(
                                               color: Color(0xffff9898)),
                                           filled: true,
@@ -208,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: RaisedButton(
                                 color: const Color(0xff1D2F75),
                                 onPressed: () {
-                                  // registerShortCut();
+                                 loginShortCut();
                                 },
                                 child: const Text(
                                   "Giriş Yap",
@@ -230,15 +241,22 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
   }
 
-  void registerShortCut() {
-    /*
+  void loginShortCut() {
+
     _authService
-        .register(_emailController.text, _passwordController.text,
-        _nameController.text, _phoneController.text)
+        .logIn(_emailController.text, _passwordController.text)
         .then((value) {
+      storage.write(
+          key: "authToken",
+          value: value!.authorization);
+      print("LOGIN TOKEN YENI: "+ value.authorization);
       return Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
+          context, MaterialPageRoute(builder: (context) =>   MainScreen(0, token:value.authorization)));
     }).catchError((err) {
+      print("HATA ");
+
+      _showPicker(context);
+      /*
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -255,7 +273,33 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             );
           });
-    });
-  */
+    */});
+
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+
+          return SafeArea(
+            child: Container(
+              color: const Color(0xff153e71),
+              child: Wrap(
+                children: [
+                  ListTile(
+                      title:  const Text("Hatalı Giriş",
+                          textAlign: TextAlign.center,
+                          style:  TextStyle(
+                            color: Colors.white,
+                          )),
+                      onTap: () {
+
+                      }),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

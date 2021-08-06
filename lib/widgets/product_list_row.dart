@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:ecommerceosy/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -30,8 +33,11 @@ class ProductListRowWidget extends StatelessWidget {
 
             primary: false,
             children: [
+
               SizedBox(
-                child: Image.network(product.image),
+                child: dataFromBase64String(product.image) == null
+                ? Image.asset("lib/assets/jcommerceWhite.png")
+                : Image.memory(dataFromBase64String(product.image)),//ASD
                 height: 105.0,
                 width: MediaQuery.of(context).size.width / 2,
               ),
@@ -44,9 +50,15 @@ class ProductListRowWidget extends StatelessWidget {
                 ),
               ),
 
+
             ],
           ),
         ),
       );
   }
+
+  Uint8List dataFromBase64String(String base64String) {
+    return base64Decode(base64String);
+  }
+
 }

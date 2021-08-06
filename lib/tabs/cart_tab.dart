@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:ecommerceosy/blocs/cart_bloc.dart';
 import 'package:ecommerceosy/models/cart.dart';
 import 'package:ecommerceosy/models/product.dart';
@@ -159,7 +161,7 @@ Widget buildCart(AsyncSnapshot snapshot) {
               child: Column(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(cart[index].product.image),
+                    backgroundImage: MemoryImage(base64Decode(cart[index].product.image)),
                   )
                 ],
               ),
@@ -182,5 +184,9 @@ Widget buildCart(AsyncSnapshot snapshot) {
         );
       });
 
+
+  Uint8List dataFromBase64String(String base64String) {
+    return base64Decode(base64String);
+  }
 
 }

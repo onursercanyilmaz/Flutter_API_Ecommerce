@@ -84,9 +84,7 @@ class ProfileTab extends StatelessWidget {
                     const SizedBox(
                       height: 50,
                     ),
-                    Stack(
-                      children: [Center(child: Text("Name Surname Connection", style: TextStyle(fontSize: 20), textAlign: TextAlign.center,))],
-                    ),
+
                     const SizedBox(
                       height: 20,
                     ),
@@ -95,39 +93,7 @@ class ProfileTab extends StatelessWidget {
                       height: 100,
                     ),
 
-                    SizedBox(
-                      width: 300,
-                      child: ClipRRect(
-                        borderRadius:
-                        const BorderRadius.all(Radius.elliptical(50, 50)),
-                        child: Container(
-                          height: 50.0,
-                          width: double.infinity,
-                          color: Colors.blue,
 
-                          child: Center(
-                            child: ButtonTheme(
-                              minWidth: 400.0,
-                              height: 100.0,
-                              child: RaisedButton(
-                                color: const Color(0xff1D2F75),
-                                onPressed: () {
-
-                                },
-                                child: const Text(
-                                  "Sepete Ekle",
-                                  style: TextStyle(
-                                    fontFamily: "Rubik",
-                                    fontSize: 22,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
 
                   ]),
             ),

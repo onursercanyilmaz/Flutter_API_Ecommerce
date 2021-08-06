@@ -4,13 +4,16 @@ import 'package:ecommerceosy/models/product.dart';
 import 'package:ecommerceosy/services/api/product_api.dart';
 
 
+var _productApi = ProductApi();
 
 class ProductBloc {
+
+
   final productStreamController = StreamController.broadcast();
 
   Stream get getStream => productStreamController.stream;
 
-  static Future getAll() {
+   Future getAll() {
     return ProductApi.getProducts();
   }
 }

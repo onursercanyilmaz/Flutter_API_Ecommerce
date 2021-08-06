@@ -56,6 +56,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          backgroundColor: const Color(0xff1D2F75),
+          child: const Icon(Icons.arrow_back),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: Container(
