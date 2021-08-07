@@ -1,17 +1,40 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:ecommerceosy/models/cart.dart';
 import 'package:ecommerceosy/models/product.dart';
 import 'package:ecommerceosy/blocs/cart_bloc.dart';
 import 'package:ecommerceosy/screens/admin/edit_product_screen.dart';
 import 'package:ecommerceosy/screens/main_screen.dart';
+import 'package:ecommerceosy/services/api/product_api.dart';
+import 'package:ecommerceosy/tabs/products_tab.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
+class ProductDetailsScreen extends StatefulWidget {
   final Product product;
   const ProductDetailsScreen({Key? key, required this.product})
       : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _ProductDetailsScreenState();
+  }
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  var product;
+
+  @override
+  void initState() {
+    setState(() {
+      product = widget.product;
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +89,23 @@ class ProductDetailsScreen extends StatelessWidget {
                             width: double.infinity,
                             color: const Color(0xffEDEEF0),
                             child: Center(
-                              child: Image.memory(
+                              child: product.image == "null"
+                                  ? Center(
+                                      child: Image.asset(
+                                          "lib/assets/jcommerceWhite.png"),
+                                    )
+                                  : Image.memory(
+                                      dataFromBase64String(product.image),
+                                      alignment: Alignment.topCenter,
+                                      scale: 2,
+                                    ),
+
+/*
+                              Image.memory(
                                 base64Decode(product.image),
                                 alignment: Alignment.topCenter,
                                 scale: 2,
-                              ),
+                              ),*/
 
                               /*SvgPicture.network(
                          "https://fenerium.com/images/logo.svg"),
@@ -159,7 +194,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       width: 300,
                       child: ClipRRect(
                         borderRadius:
-                        const BorderRadius.all(Radius.elliptical(50, 50)),
+                            const BorderRadius.all(Radius.elliptical(50, 50)),
                         child: Container(
                           height: 50.0,
                           width: double.infinity,
@@ -181,7 +216,9 @@ class ProductDetailsScreen extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) =>  EditProductScreen(),
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditProductScreen(product),
                                       ));
                                 },
                               ),
@@ -197,7 +234,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       width: 300,
                       child: ClipRRect(
                         borderRadius:
-                        const BorderRadius.all(Radius.elliptical(50, 50)),
+                            const BorderRadius.all(Radius.elliptical(50, 50)),
                         child: Container(
                           height: 50.0,
                           width: double.infinity,
@@ -217,7 +254,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                   ),
                                 ),
                                 onPressed: () {
-                                 deleteProduct();
+                                  deleteProductShortCut();
                                 },
                               ),
                             ),
@@ -231,6 +268,44 @@ class ProductDetailsScreen extends StatelessWidget {
         ));
   }
 
+  void deleteProductShortCut() {
+    ProductApi.deleteProduct(myToken.toString(), widget.product.id).then((value){
+
+      return Navigator.pop(context);
+    }).catchError((err) {
+      print("HATA " + err.toString());
+
+      _showError(context);
+    });
+  }
+
+  void _showError(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              color: const Color(0xff153e71),
+              child: Wrap(
+                children: [
+                  ListTile(
+                      title: const Text("Hatalı İşlem",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                          )),
+                      onTap: () {}),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Uint8List dataFromBase64String(String base64String) {
+    return base64Decode(base64String);
+  }
+
   void _showPicker(context) {
     showModalBottomSheet(
         context: context,
@@ -241,20 +316,18 @@ class ProductDetailsScreen extends StatelessWidget {
               child: Wrap(
                 children: [
                   ListTile(
-
                       title: const Text('Sepete Eklendi',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
                           )),
                       onTap: () {
-
+                        Navigator.pop(context);
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) =>   MainScreen(4),
-                        ));
-
-
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MainScreen(4),
+                            ));
                       }),
                 ],
               ),
@@ -263,5 +336,8 @@ class ProductDetailsScreen extends StatelessWidget {
         });
   }
 
-  void deleteProduct() {}
 }
+
+
+
+

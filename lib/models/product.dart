@@ -6,15 +6,17 @@ class Product {
   late int price;
   late String description;
 
+
+
   Product(this.id, this.title, this.image,
       this.price, this.description);
 
   Product.formJson(Map json) {
-    //id = json["uuid"] == null ? "UndefinedId" : json["uuid"];
+    id = json["uuid"] ?? "UndefinedId";
     //category = json["CategoryName"];
     title = json["name"].toString();
     image = json["mainImage"]==null ? "null":json["mainImage"]["document"].toString().replaceAll('\n','');
-    price = json["vat"] ?? 4;
+    price = int.tryParse(json["code"]) ?? 4;
 
   }
 

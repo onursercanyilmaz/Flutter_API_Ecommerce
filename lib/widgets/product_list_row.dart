@@ -18,47 +18,46 @@ class ProductListRowWidget extends StatelessWidget {
 
   Widget buildProductItemCard(BuildContext context) {
     return InkWell(
-      onTap: (){
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ProductDetailsScreen(product: product)));
-
-
-          },
-        child: Card(
-          color: const Color(0xffEDEEF0),
-
-          child: ListView(
-
-            primary: false,
-            children: [
-
-              SizedBox(
-                child: dataFromBase64String(product.image) == null
-                ? Image.asset("lib/assets/jcommerceWhite.png")
-                : Image.memory(dataFromBase64String(product.image)),//ASD
-                height: 105.0,
-                width: MediaQuery.of(context).size.width / 2,
-              ),
-              Center(child: Text(product.title, style: const TextStyle(), textAlign: TextAlign.center,)),
-
-              Center(
+      onTap: () {
+        print(product.id);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProductDetailsScreen(product: product)));
+      },
+      child: Card(
+        color: const Color(0xffEDEEF0),
+        child: ListView(
+          primary: false,
+          children: [
+            SizedBox(
+              child: product.image == "null"
+                  ? Center(
+                      child: Image.asset("lib/assets/jcommerceWhite.png"),
+                    )
+                  : Image.memory(dataFromBase64String(product.image)), //ASD
+              height: 105.0,
+              width: MediaQuery.of(context).size.width / 2,
+            ),
+            Center(
                 child: Text(
-                  product.price.toString(),
-                  style: const TextStyle(fontSize: 18.0, color: Colors.blue),
-                ),
+              product.title,
+              style: const TextStyle(),
+              textAlign: TextAlign.center,
+            )),
+            Center(
+              child: Text(
+                product.price.toString(),
+                style: const TextStyle(fontSize: 18.0, color: Colors.blue),
               ),
-
-
-            ],
-          ),
+            ),
+          ],
         ),
-      );
+      ),
+    );
   }
 
   Uint8List dataFromBase64String(String base64String) {
     return base64Decode(base64String);
   }
-
 }

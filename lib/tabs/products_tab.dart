@@ -34,19 +34,21 @@ class _ProductsTabState extends State<ProductsTab>{
   List<Widget> categoryWidgets = <Widget>[];
   List<Product> products = <Product>[];
 
-  var _productApi = ProductApi();
 
   @override
   void initState() {
-    getPro();
-    myToken = widget.token;
+
+    setState(() {
+      getPro();
+      myToken = widget.token;
+    });
+
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print("HELLO WORLD----->>>"+ myToken);
     return Scaffold(
       backgroundColor: const Color(0xff1D2F75),
       body: Padding(
@@ -110,9 +112,9 @@ class _ProductsTabState extends State<ProductsTab>{
 
 }*/
 
-void getPro() async
+void getPro()
 {
-  await ProductApi.getProducts().then((response) {
+   ProductApi.getProducts().then((response) {
 
 
     if(mounted)
@@ -130,9 +132,4 @@ void getPro() async
 }
 
 
-  @override
-  void dispose() {
-   getPro();
-    super.dispose();
-  }
 }

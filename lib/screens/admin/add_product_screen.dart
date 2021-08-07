@@ -1,32 +1,32 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:ecommerceosy/services/api/product_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ecommerceosy/tabs/products_tab.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddProductScreen extends StatefulWidget {
+  const AddProductScreen({Key? key}) : super(key: key);
+
+
   @override
   _AddProductScreenState createState() => _AddProductScreenState();
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
 
   String imagePath = "";
   final _picker = ImagePicker();
 
   _getImageFromGallery() async {
-    //PickedFile? _image = await _picker.getImage(source:ImageSource.gallery ) ;
-    //var _picture = (await _picker.pickImage(source:ImageSource.gallery )) ;
     var _image = await _picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       imagePath = _image!.path;
-      //_img = _image;
-      //_pic = _picture;
     });
   }
 
@@ -59,7 +59,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton:  FloatingActionButton(onPressed: (){ Navigator.pop(context);},mini: true,child:const Icon(Icons.arrow_back,color: Colors.white),backgroundColor:const Color(0xff1D2F75)   ,),
         resizeToAvoidBottomInset: true,
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         body: SafeArea(
           child: Container(
             decoration: const BoxDecoration(
@@ -86,10 +88,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           child: Center(
                             child: Image.asset("lib/assets/jcommerceWhite.png"),
 
-                            /*SvgPicture.network(
-                         "https://fenerium.com/images/logo.svg"),
-                     NetworkImage(
-                       "https://fenerium.com/assets/img/subscribe-bg-img.png"), */
                           ),
                         ),
                       ),
@@ -181,7 +179,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                   color: const Color(0xffCC222B),
                                   child: TextFormField(
                                     keyboardType: TextInputType.name,
-                                    controller: _emailController,
+                                    controller: _priceController,
                                     cursorColor: Colors.white,
                                     style: const TextStyle(
                                       color: Colors.white,
@@ -201,76 +199,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                             top: 11,
                                             right: 15),
                                         hintText: "Ürün Fiyatı"),
-                                  )),
-                            ),
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(top: 100),
-                          child: Align(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Container(
-                                  margin: const EdgeInsets.only(
-                                      left: 30, right: 30),
-                                  padding: const EdgeInsets.only(
-                                      left: 30, right: 30),
-                                  color: const Color(0xffCC222B),
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.name,
-                                    controller: _passwordController,
-                                    cursorColor: Colors.white,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                    decoration: const InputDecoration(
-                                        hintStyle:
-                                            TextStyle(color: Color(0xffff9898)),
-                                        filled: true,
-                                        fillColor: Color(0xffCC222B),
-                                        focusColor: Color(0xffCC222B),
-                                        hoverColor: Color(0xffe55c63),
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        contentPadding: EdgeInsets.only(
-                                            left: 15,
-                                            bottom: 11,
-                                            top: 11,
-                                            right: 15),
-                                        hintText: "Stok Adedi"),
-                                  )),
-                            ),
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(top: 150),
-                          child: Align(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Container(
-                                  margin: const EdgeInsets.only(left: 30, right: 30),
-                                  padding: const EdgeInsets.only(left: 30, right: 30),
-                                  color: const Color(0xffCC222B),
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.name,
-                                    controller: _phoneController,
-                                    cursorColor: Colors.white,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                    decoration: const InputDecoration(
-                                        hintStyle:
-                                            TextStyle(color: Color(0xffff9898)),
-                                        filled: true,
-                                        fillColor: Color(0xffCC222B),
-                                        focusColor: Color(0xffCC222B),
-                                        hoverColor: Color(0xffe55c63),
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        contentPadding: EdgeInsets.only(
-                                            left: 15,
-                                            bottom: 11,
-                                            top: 11,
-                                            right: 15),
-                                        hintText: "Kategori"),
                                   )),
                             ),
                           )),
@@ -295,7 +223,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             child: RaisedButton(
                               color: const Color(0xff1D2F75),
                               onPressed: () {
-                                // registerShortCut();
+                                addProductShortCut();
                               },
                               child: const Text(
                                 "Ürün Ekle",
@@ -316,5 +244,54 @@ class _AddProductScreenState extends State<AddProductScreen> {
             ),
           ),
         ));
+  }
+
+
+  void addProductShortCut() {
+    ProductApi.addProduct(
+        myToken.toString(), _priceController.text, _nameController.text, imagePath )
+        .then((value) {
+
+      return Navigator.pop(context);
+    }).catchError((err) {
+      print("HATA " + err.toString());
+
+      _showError(context);
+    });
+  }
+
+  void _showError(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              color: const Color(0xff153e71),
+              child: Wrap(
+                children: [
+                  ListTile(
+                      title: const Text("Hatalı İşlem",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                          )),
+                      onTap: () {}),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  imagetoByteList(product)
+  {
+    var decodedImage = dataFromBase64String(product.image);
+    List<int> list = List.from(decodedImage);
+    return list;
+  }
+
+
+  Uint8List dataFromBase64String(String base64String) {
+    return base64Decode(base64String);
   }
 }

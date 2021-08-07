@@ -16,6 +16,7 @@ class ProductBloc {
    Future getAll() {
     return ProductApi.getProducts();
   }
+
 }
 
 final productBloc = ProductBloc();

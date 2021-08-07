@@ -1,21 +1,21 @@
-import 'package:ecommerceosy/screens/admin/add_product_screen.dart';
-import 'package:ecommerceosy/screens/landing_screen.dart';
+
 import 'package:ecommerceosy/screens/login_screen.dart';
-import 'package:ecommerceosy/screens/main_screen.dart';
-import 'package:ecommerceosy/screens/user/register_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/product_details_screen.dart';
+
 
 
 void main() {
-  runApp(HttpApp());
+  runApp(const HttpApp());
 }
 
 class HttpApp extends StatelessWidget {
+  const HttpApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return   MaterialApp(
+      //debugShowCheckedModeBanner: false,
       home: LoginScreen(),
     );
   }

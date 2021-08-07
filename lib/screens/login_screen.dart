@@ -1,3 +1,4 @@
+import 'package:ecommerceosy/models/user.dart';
 import 'package:ecommerceosy/screens/user/register_screen.dart';
 import 'package:ecommerceosy/services/api/product_api.dart';
 import 'package:ecommerceosy/services/auth.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'main_screen.dart';
 
-final storage =  new FlutterSecureStorage();
+final storage = new FlutterSecureStorage();
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -54,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: const Color(0xffCC222B),
                             child: Center(
                               child:
-                              Image.asset("lib/assets/jcommerceWhite.png"),
+                                  Image.asset("lib/assets/jcommerceWhite.png"),
 
                               /*SvgPicture.network(
                          "https://fenerium.com/images/logo.svg"),
@@ -87,7 +88,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Stack(
                       children: [
-
                         Padding(
                             padding: const EdgeInsets.only(top: 50),
                             child: Align(
@@ -124,7 +124,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     )),
                               ),
                             )),
-
                         Padding(
                             padding: const EdgeInsets.only(top: 100),
                             child: Align(
@@ -138,14 +137,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: const Color(0xffCC222B),
                                     child: TextFormField(
                                       obscureText: true,
-                                      keyboardType: TextInputType.visiblePassword,
+                                      keyboardType:
+                                          TextInputType.visiblePassword,
                                       controller: _passwordController,
                                       cursorColor: Colors.white,
                                       style: const TextStyle(
                                         color: Colors.white,
                                       ),
                                       decoration: const InputDecoration(
-
                                           hintStyle: TextStyle(
                                               color: Color(0xffff9898)),
                                           filled: true,
@@ -163,7 +162,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     )),
                               ),
                             )),
-
                       ],
                     ),
                     const SizedBox(
@@ -184,7 +182,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => RegisterScreen()),
+                                  MaterialPageRoute(
+                                      builder: (context) => RegisterScreen()),
                                 );
                               },
                               child: const Text(
@@ -207,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: 300,
                       child: ClipRRect(
                         borderRadius:
-                        const BorderRadius.all(Radius.elliptical(50, 50)),
+                            const BorderRadius.all(Radius.elliptical(50, 50)),
                         child: Container(
                           height: 50.0,
                           width: double.infinity,
@@ -219,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: RaisedButton(
                                 color: const Color(0xff1D2F75),
                                 onPressed: () {
-                                 loginShortCut();
+                                  loginShortCut();
                                 },
                                 child: const Text(
                                   "Giriş Yap",
@@ -246,56 +245,35 @@ class _LoginScreenState extends State<LoginScreen> {
     _authService
         .logIn(_emailController.text, _passwordController.text)
         .then((value) {
-      storage.write(
-          key: "authToken",
-          value: value!.authorization);
-      print("LOGIN TOKEN YENI: "+ value.authorization);
+      storage.write(key: "authToken", value: value!.authorization);
+      print("LOGIN TOKEN YENI: " + value.authorization);
       return Navigator.push(
-          context, MaterialPageRoute(builder: (context) =>   MainScreen(0, token:value.authorization)));
+          context,
+          MaterialPageRoute(
+              builder: (context) => MainScreen(2, token: value.authorization)));
     }).catchError((err) {
       print("HATA ");
 
-      _showPicker(context);
-      /*
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("HATA"),
-              content: Text(err.code),
-              actions: [
-                FlatButton(
-                  child: const Text("Tamam"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          });
-    */});
-
+      _showError(context);
+    });
   }
 
-  void _showPicker(context) {
+  void _showError(context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
-
           return SafeArea(
             child: Container(
               color: const Color(0xff153e71),
               child: Wrap(
                 children: [
                   ListTile(
-                      title:  const Text("Hatalı Giriş",
+                      title: const Text("Hatalı Giriş",
                           textAlign: TextAlign.center,
-                          style:  TextStyle(
+                          style: TextStyle(
                             color: Colors.white,
                           )),
-                      onTap: () {
-
-                      }),
+                      onTap: () {}),
                 ],
               ),
             ),

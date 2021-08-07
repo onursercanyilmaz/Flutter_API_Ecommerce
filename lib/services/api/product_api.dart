@@ -1,28 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ecommerceosy/blocs/cart_bloc.dart';
+import 'package:ecommerceosy/blocs/product_bloc.dart';
 import 'package:ecommerceosy/models/product.dart';
 import 'package:ecommerceosy/tabs/products_tab.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import "package:http/http.dart" as http;
 import 'package:http/http.dart';
 
 class ProductApi {
-/*
-  static Future getProducts() {
-    var url = Uri.tryParse("https://fenerium-flutter-default-rtdb.europe-west1.firebasedatabase.app/Products.json");
-    return http.get(url!);
-  }*/
 
   static Future getProductsByCategoryId(int categoryId) {
     var url =
-        Uri.tryParse("https://fakestoreapi.com/products/$categoryId");
+    Uri.tryParse("https://fakestoreapi.com/products/$categoryId");
     return http.get(url!);
   }
 
-  final storage =  const FlutterSecureStorage();
-
-
+  final storage = const FlutterSecureStorage();
 
   Future<Map<String, String?>?> getAuthToken() async {
     var store = {
@@ -31,30 +27,191 @@ class ProductApi {
     return store;
   }
 
-  static Future getProducts()
-  {
+  static Future getProducts() {
     var authToken = "61:" + myToken.toString() + ":" + "INTERNALUSER";
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     String productEncoded = stringToBase64.encode(authToken);
 
-    print("AUTHTOKEN----->" + productEncoded);
-    final getUrl = Uri.parse(
+    final url = Uri.parse(
         'https://jptest.diyalogo.com.tr/logo/rest/v1.0/mmitemexchanges?offset=0&limit=100&direction=desc&expandlevel=25');
-    final response =  http.get(
-      getUrl,
+    final response = http.get(
+      url,
       headers: {
         "content-type": "application/json",
-        "Auth-Token": productEncoded ,
+        "Auth-Token": productEncoded,
       },
 
     );
 
-    print("RESPONSE MU ------>>>>>>>>>"+ response.toString());
+    print("RESPONSE MU ------>>>>>>>>>" + response.toString());
     return response;
-
   }
 
-  /* Future getProducts() async{
+  static Future addProduct(String token, code, name,
+      image) async {
+    var authToken = "61:" + token + ":" + "INTERNALUSER";
+    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+    String encodedAuthKey = stringToBase64.encode(authToken);
+    var addJson = json.decode("{"
+        "\"data\": {"
+        "\"code\": \"$code\","
+        "\"name\": \"$name\","
+        "\"mainImage\": {"
+        "\"items\": []"
+        "},"
+        "\"unitSetRef\": {"
+        "\"reference\": 0,"
+        "\"unitSet_Code\": \"\""
+        "},"
+        "\"uOMList\": {"
+        "\"items\": []"
+        "}"
+        "}"
+        "}");
+
+/*------------------------------
+
+    int i;
+    var num = 3;
+    var stringNum = "05";
+    var unitLine = "ADET";
+
+      updateJson['data']['mainImage']['items'].add(json.decode(
+          "{\"document\": \"${base64.encode(image).toString()}\"}"));
+
+      /*
+    for (i = 0; i < 1; i++) {
+      if (i == 0) {
+        updateJson['data']['unitSetRef']['reference'] = num;
+        updateJson['data']['unitSetRef']['unitSet_Code'] =
+            stringNum;
+      }
+
+      var tmpItem = json.decode(
+          "{\"unitLineRef\": {\"reference\": $num,\"unitLine_Code\": \"$unitLine\",\"unitLine_Uomsetref\":{\"reference\": $num,\"unitLine_Uomsetref_Code\": \"$stringNum\"}},\"barCodes\":{\"items\": []}}");
+      updateJson['data']['uOMList']['items'].add(tmpItem);
+
+      int tmpLength = 0;
+      var barcode = "00000000";
+      for (int x = 0; x < tmpLength; x++) {
+        updateJson['data']['uOMList']['items'][i]['barCodes']['items'].add(
+            json.decode(
+                "{\"lineNumber\": ${x + 1},\"barCode\": \"$barcode\"}"));
+      }
+*/
+      //---------------------------------*/
+
+    final url = Uri.parse(
+        'https://jptest.diyalogo.com.tr/logo/rest/v1.0/mmitemexchanges/');
+    final add = await http.post(
+      url,
+      headers: {
+        'content-type': 'application/json; charset=UTF-8',
+        'Auth-Token': encodedAuthKey
+      },
+      body: json.encode(addJson['data']),
+    );
+
+    print(add.body);
+    print("ADD STATUS CODE----->>>>" + add.statusCode.toString());
+    return add.statusCode;
+  }
+
+
+  static Future updateProduct(String token, code, name,
+      image, productId) async {
+    var authToken = "61:" + token + ":" + "INTERNALUSER";
+    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+    String encodedAuthKey = stringToBase64.encode(authToken);
+    var updateJson = json.decode("{"
+        "\"data\": {"
+        "\"code\": \"$code\","
+        "\"name\": \"$name\","
+        "\"mainImage\": {"
+        "\"items\": []"
+        "},"
+        "\"unitSetRef\": {"
+        "\"reference\": 0,"
+        "\"unitSet_Code\": \"\""
+        "},"
+        "\"uOMList\": {"
+        "\"items\": []"
+        "}"
+        "}"
+        "}");
+
+/*------------------------------
+
+    int i;
+    var num = 3;
+    var stringNum = "05";
+    var unitLine = "ADET";
+
+      updateJson['data']['mainImage']['items'].add(json.decode(
+          "{\"document\": \"${base64.encode(image).toString()}\"}"));
+
+      /*
+    for (i = 0; i < 1; i++) {
+      if (i == 0) {
+        updateJson['data']['unitSetRef']['reference'] = num;
+        updateJson['data']['unitSetRef']['unitSet_Code'] =
+            stringNum;
+      }
+
+      var tmpItem = json.decode(
+          "{\"unitLineRef\": {\"reference\": $num,\"unitLine_Code\": \"$unitLine\",\"unitLine_Uomsetref\":{\"reference\": $num,\"unitLine_Uomsetref_Code\": \"$stringNum\"}},\"barCodes\":{\"items\": []}}");
+      updateJson['data']['uOMList']['items'].add(tmpItem);
+
+      int tmpLength = 0;
+      var barcode = "00000000";
+      for (int x = 0; x < tmpLength; x++) {
+        updateJson['data']['uOMList']['items'][i]['barCodes']['items'].add(
+            json.decode(
+                "{\"lineNumber\": ${x + 1},\"barCode\": \"$barcode\"}"));
+      }
+*/
+      //---------------------------------*/
+
+    final url = Uri.parse(
+        'https://jptest.diyalogo.com.tr/logo/rest/v1.0/mmitemexchanges/$productId');
+    final update = await http.post(
+      url,
+      headers: {
+        'content-type': 'application/json; charset=UTF-8',
+        'Auth-Token': encodedAuthKey
+      },
+      body: json.encode(updateJson['data']),
+    );
+
+    print(update.body);
+    print("UPDATE STATUS CODE----->>>>" + update.statusCode.toString());
+    return update.statusCode;
+  }
+
+
+  static Future deleteProduct(token, productId) async
+  {
+    var authToken = "61:" + token.toString() + ":" + "INTERNALUSER";
+    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+    String encodedAuthKey = stringToBase64.encode(authToken);
+
+
+    final url = Uri.parse(
+        'https://jptest.diyalogo.com.tr/logo/rest/v1.0/mmitemexchanges/$productId');
+    final delete =  await http.delete(
+      url,
+      headers: {
+        'content-type': 'application/json',
+        'Auth-Token': encodedAuthKey
+      },
+    );
+
+    print("DELETE RESPONSE CODE ---->>>" + delete.statusCode.toString());
+    return delete.statusCode;
+  }
+
+
+/* Future getProducts() async{
     getAuthToken().then((value) async {
 
       var authToken = "61:" + value!['authToken']! + ":" + "INTERNALUSER";
@@ -93,16 +250,7 @@ class ProductApi {
     });
 
   }*/
-
-
-  static Future getCategoryofProducts(int categoryId) {
-    var url =
-    Uri.tryParse("https://fakestoreapi.com/products/$categoryId");
-    return http.get(url!);
-  }
-
-
-  /* static Future getProducts() {
+/* static Future getProducts() {
     var url = Uri.tryParse("https://feneriumjson.herokuapp.com/Products.json");
     return http.get(url!);
   }
@@ -118,4 +266,10 @@ class ProductApi {
     Uri.tryParse("https://fakestoreapi.com/products/$categoryId");
     return http.get(url!);
   }*/
+/*
+  static Future getProducts() {
+    var url = Uri.tryParse("https://fenerium-flutter-default-rtdb.europe-west1.firebasedatabase.app/Products.json");
+    return http.get(url!);
+  }*/
+
 }

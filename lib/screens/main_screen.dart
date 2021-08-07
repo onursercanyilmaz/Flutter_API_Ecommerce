@@ -1,4 +1,5 @@
 import 'package:ecommerceosy/blocs/cart_bloc.dart';
+import 'package:ecommerceosy/screens/admin/add_product_screen.dart';
 import 'package:ecommerceosy/tabs/categories_tab.dart';
 import 'package:ecommerceosy/tabs/products_tab.dart';
 import 'package:ecommerceosy/tabs/cart_tab.dart';
@@ -27,6 +28,10 @@ class _MainScreenState extends State<MainScreen>{
   void initState() {
 
     super.initState();
+
+    setState(() {
+
+    });
   }
 
   @override
@@ -38,7 +43,12 @@ class _MainScreenState extends State<MainScreen>{
        backgroundColor: Colors.white,
        appBar: AppBar(
          backgroundColor: const Color(0xff1D2F75),
-         bottom:  const TabBar(
+         actions: [  FloatingActionButton(onPressed: (){ Navigator.push(
+           context,
+           MaterialPageRoute(builder: (context) => AddProductScreen()),
+         );},mini: true,child:const Icon(Icons.add_box_rounded,color: Colors.white),backgroundColor:const Color(0xff1D2F75)   ,)],
+
+         bottom:   TabBar(
            tabs: [
              Tab(icon: Icon(Icons.category_rounded)),
              Tab(icon: Icon(Icons.view_module_rounded)),
@@ -58,6 +68,7 @@ class _MainScreenState extends State<MainScreen>{
            SearchTab(),
            ProfileTab(),
            CartTab(),
+
 
          ],
        ),
