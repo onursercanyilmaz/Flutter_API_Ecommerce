@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:ecommerceosy/tabs/products_tab.dart';
 import 'package:image_picker/image_picker.dart';
 
+
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({Key? key}) : super(key: key);
 
@@ -20,6 +21,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _nameController = TextEditingController();
 
   String imagePath = "";
+
   final _picker = ImagePicker();
 
   _getImageFromGallery() async {
@@ -27,7 +29,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
     setState(() {
       imagePath = _image!.path;
+
     });
+
   }
 
   void _showPicker(context) {
@@ -249,10 +253,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   void addProductShortCut() {
     ProductApi.addProduct(
-        myToken.toString(), _priceController.text, _nameController.text, imagePath )
+        myToken.toString(), _priceController.text, _nameController.text, getBase64FormateFile(imagePath) )
         .then((value) {
 
-      return Navigator.pop(context);
+       Navigator.pop(context);
     }).catchError((err) {
       print("HATA " + err.toString());
 
@@ -283,15 +287,26 @@ class _AddProductScreenState extends State<AddProductScreen> {
         });
   }
 
-  imagetoByteList(product)
+  imagetoByteList(image)
   {
-    var decodedImage = dataFromBase64String(product.image);
-    List<int> list = List.from(decodedImage);
+    List<int> list = List.from(image);
     return list;
   }
 
-
-  Uint8List dataFromBase64String(String base64String) {
-    return base64Decode(base64String);
+  static String getBase64FormateFile(String path) {
+  File file = File(path);
+  print('File is = ' + file.toString());
+  List<int> fileInByte = file.readAsBytesSync();
+  String fileInBase64 = base64Encode(fileInByte);
+  print("BYTES---->> "+fileInByte.toString());
+  return fileInBase64;
   }
+
+   encodeDataFromBase64String(base64String) {
+    return base64Encode(base64String);
+  }
+
+
+
+
 }

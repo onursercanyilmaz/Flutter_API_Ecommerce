@@ -26,7 +26,7 @@ class ProductListRowWidget extends StatelessWidget {
                 builder: (context) => ProductDetailsScreen(product: product)));
       },
       child: Card(
-        color: const Color(0xffEDEEF0),
+        color:  Colors.white,
         child: ListView(
           primary: false,
           children: [

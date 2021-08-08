@@ -33,14 +33,13 @@ class ProductApi {
     String productEncoded = stringToBase64.encode(authToken);
 
     final url = Uri.parse(
-        'https://jptest.diyalogo.com.tr/logo/rest/v1.0/mmitemexchanges?offset=0&limit=100&direction=desc&expandlevel=25');
+        'https://jptest.diyalogo.com.tr/logo/rest/v1.0/mmitemexchanges?expandlevel=25');
     final response = http.get(
       url,
       headers: {
-        "content-type": "application/json",
+        "content-type": "application/json; charset=UTF-8",
         "Auth-Token": productEncoded,
       },
-
     );
 
     print("RESPONSE MU ------>>>>>>>>>" + response.toString());
@@ -48,58 +47,22 @@ class ProductApi {
   }
 
   static Future addProduct(String token, code, name,
-      image) async {
-    var authToken = "61:" + token + ":" + "INTERNALUSER";
+      encodedImage) async {
+    var authToken = "61:" + token.toString() + ":" + "INTERNALUSER";
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     String encodedAuthKey = stringToBase64.encode(authToken);
+    print("ENCODEDIMAGE------->>>  "+ encodedImage.toString());
     var addJson = json.decode("{"
         "\"data\": {"
         "\"code\": \"$code\","
         "\"name\": \"$name\","
         "\"mainImage\": {"
-        "\"items\": []"
-        "},"
-        "\"unitSetRef\": {"
-        "\"reference\": 0,"
-        "\"unitSet_Code\": \"\""
-        "},"
-        "\"uOMList\": {"
+        "\"document\": \"${encodedImage.toString()}\","
         "\"items\": []"
         "}"
         "}"
         "}");
 
-/*------------------------------
-
-    int i;
-    var num = 3;
-    var stringNum = "05";
-    var unitLine = "ADET";
-
-      updateJson['data']['mainImage']['items'].add(json.decode(
-          "{\"document\": \"${base64.encode(image).toString()}\"}"));
-
-      /*
-    for (i = 0; i < 1; i++) {
-      if (i == 0) {
-        updateJson['data']['unitSetRef']['reference'] = num;
-        updateJson['data']['unitSetRef']['unitSet_Code'] =
-            stringNum;
-      }
-
-      var tmpItem = json.decode(
-          "{\"unitLineRef\": {\"reference\": $num,\"unitLine_Code\": \"$unitLine\",\"unitLine_Uomsetref\":{\"reference\": $num,\"unitLine_Uomsetref_Code\": \"$stringNum\"}},\"barCodes\":{\"items\": []}}");
-      updateJson['data']['uOMList']['items'].add(tmpItem);
-
-      int tmpLength = 0;
-      var barcode = "00000000";
-      for (int x = 0; x < tmpLength; x++) {
-        updateJson['data']['uOMList']['items'][i]['barCodes']['items'].add(
-            json.decode(
-                "{\"lineNumber\": ${x + 1},\"barCode\": \"$barcode\"}"));
-      }
-*/
-      //---------------------------------*/
 
     final url = Uri.parse(
         'https://jptest.diyalogo.com.tr/logo/rest/v1.0/mmitemexchanges/');
@@ -119,62 +82,28 @@ class ProductApi {
 
 
   static Future updateProduct(String token, code, name,
-      image, productId) async {
-    var authToken = "61:" + token + ":" + "INTERNALUSER";
+      encodedImage, productId) async {
+    var authToken = "61:" + token.toString() + ":" + "INTERNALUSER";
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     String encodedAuthKey = stringToBase64.encode(authToken);
+
+    print("ENCODEDIMAGE------->>>  "+ encodedImage.toString());
+
     var updateJson = json.decode("{"
         "\"data\": {"
         "\"code\": \"$code\","
         "\"name\": \"$name\","
         "\"mainImage\": {"
-        "\"items\": []"
-        "},"
-        "\"unitSetRef\": {"
-        "\"reference\": 0,"
-        "\"unitSet_Code\": \"\""
-        "},"
-        "\"uOMList\": {"
+        "\"document\": \"${encodedImage.toString()}\","
         "\"items\": []"
         "}"
         "}"
-        "}");
-
-/*------------------------------
-
-    int i;
-    var num = 3;
-    var stringNum = "05";
-    var unitLine = "ADET";
-
-      updateJson['data']['mainImage']['items'].add(json.decode(
-          "{\"document\": \"${base64.encode(image).toString()}\"}"));
-
-      /*
-    for (i = 0; i < 1; i++) {
-      if (i == 0) {
-        updateJson['data']['unitSetRef']['reference'] = num;
-        updateJson['data']['unitSetRef']['unitSet_Code'] =
-            stringNum;
-      }
-
-      var tmpItem = json.decode(
-          "{\"unitLineRef\": {\"reference\": $num,\"unitLine_Code\": \"$unitLine\",\"unitLine_Uomsetref\":{\"reference\": $num,\"unitLine_Uomsetref_Code\": \"$stringNum\"}},\"barCodes\":{\"items\": []}}");
-      updateJson['data']['uOMList']['items'].add(tmpItem);
-
-      int tmpLength = 0;
-      var barcode = "00000000";
-      for (int x = 0; x < tmpLength; x++) {
-        updateJson['data']['uOMList']['items'][i]['barCodes']['items'].add(
-            json.decode(
-                "{\"lineNumber\": ${x + 1},\"barCode\": \"$barcode\"}"));
-      }
-*/
-      //---------------------------------*/
+        "}"
+    );
 
     final url = Uri.parse(
         'https://jptest.diyalogo.com.tr/logo/rest/v1.0/mmitemexchanges/$productId');
-    final update = await http.post(
+    final update = await put(
       url,
       headers: {
         'content-type': 'application/json; charset=UTF-8',

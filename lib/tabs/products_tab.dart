@@ -2,11 +2,6 @@
 import 'dart:convert';
 import 'dart:core';
 
-import 'package:ecommerceosy/blocs/cart_bloc.dart';
-import 'package:ecommerceosy/blocs/product_bloc.dart';
-import 'package:ecommerceosy/models/cart.dart';
-import "package:http/http.dart" as http;
-import 'package:http/src/response.dart';
 import 'package:ecommerceosy/models/category.dart';
 import 'package:ecommerceosy/models/product.dart';
 import 'package:ecommerceosy/services/api/product_api.dart';
@@ -37,9 +32,8 @@ class _ProductsTabState extends State<ProductsTab>{
 
   @override
   void initState() {
-
+    getPro();
     setState(() {
-      getPro();
       myToken = widget.token;
     });
 
@@ -114,8 +108,8 @@ class _ProductsTabState extends State<ProductsTab>{
 
 void getPro()
 {
-   ProductApi.getProducts().then((response) {
 
+   ProductApi.getProducts().then((response) {
 
     if(mounted)
     {
@@ -123,12 +117,13 @@ void getPro()
         Iterable list = json.decoder.convert(response.body)['data']["items"];
         products =
             list.map((product) => Product.formJson(product)).toList();
-      });
 
+      });
 
    }
 
   });
+
 }
 
 

@@ -87,7 +87,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           child: Container(
                             height: 400.0,
                             width: double.infinity,
-                            color: const Color(0xffEDEEF0),
+                            color:  Colors.white,
                             child: Center(
                               child: product.image == "null"
                                   ? Center(
@@ -271,7 +271,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   void deleteProductShortCut() {
     ProductApi.deleteProduct(myToken.toString(), widget.product.id).then((value){
 
-      return Navigator.pop(context);
+      Navigator.pop(context);
     }).catchError((err) {
       print("HATA " + err.toString());
 

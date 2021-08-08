@@ -44,7 +44,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 children: [
                   ListTile(
                       leading: const Icon(Icons.photo_library),
-                      title: const Text('From Gallery',
+                      title: const Text('Galeriden Yükle',
                           style: TextStyle(
                             color: Colors.white,
                           )),
@@ -120,7 +120,28 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                   child: CircleAvatar(
                                     radius: 55,
                                     backgroundColor: const Color(0x00e25d64),
-                                    child: showImage(widget.product),
+                                    child: imagePath != ""
+                                        ? ClipRRect(
+                                      borderRadius:
+                                      BorderRadius.circular(0),
+                                      child: Image.file(
+                                        File(imagePath),
+                                        width: 400,
+                                        height: 400,
+                                      ),
+                                    )
+                                        : Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.redAccent,
+                                          borderRadius:
+                                          BorderRadius.circular(100)),
+                                      width: 500,
+                                      height: 500,
+                                      child: const Icon(
+                                        Icons.camera_alt,
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               )),
@@ -315,10 +336,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   void updateShortCut() {
     ProductApi.updateProduct(
-            myToken.toString(), _priceController.text, _nameController.text,  imagetoByteList(widget.product), widget.product.id.toString())
+            myToken.toString(), _priceController.text, _nameController.text,  getBase64FormateFile(imagePath), widget.product.id.toString())
         .then((value) {
 
-      return Navigator.pop(context);
+         Navigator.pop(context);
+
     }).catchError((err) {
       print("HATA " + err.toString());
 
@@ -349,17 +371,20 @@ class _EditProductScreenState extends State<EditProductScreen> {
         });
   }
 
-  imagetoByteList(product)
-  {
-    var decodedImage = dataFromBase64String(product.image);
-    List<int> list = List.from(decodedImage);
-    return list;
+  static String getBase64FormateFile(String path) {
+    File file = File(path);
+    print('File is = ' + file.toString());
+    List<int> fileInByte = file.readAsBytesSync();
+    String fileInBase64 = base64Encode(fileInByte);
+    print("BYTES---->> "+fileInByte.toString());
+    return fileInBase64;
   }
 
-  showImage(product) {
-    if (product.image != null) {
+  /*showImage(product) {
+    if (imagePath != "" && product.image != null) {
+      imagePath = dataFromBase64String(product.image).toString();
       return Image.memory(
-        dataFromBase64String(product.image),
+        dataFromBase64String(product.image), //Düzenlenecek ürünün resmini gösterir.
         alignment: Alignment.topCenter,
         scale: 2,
       );
@@ -375,37 +400,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
         ),
       );
     }
-  }
+  }*/
 
 
-  Uint8List dataFromBase64String(String base64String) {
-    return base64Decode(base64String);
-  }
-/*CircleAvatar(
-                                    radius: 55,
-                                    backgroundColor: const Color(0x00e25d64),
-                                    child: imagePath != ""
-                                        ? ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(0),
-                                            child: Image.file(
-                                              File(imagePath),
-                                              width: 400,
-                                              height: 400,
-                                            ),
-                                          )
-                                        : Container(
-                                            decoration: BoxDecoration(
-                                                color: Colors.redAccent,
-                                                borderRadius:
-                                                    BorderRadius.circular(100)),
-                                            width: 500,
-                                            height: 500,
-                                            child: const Icon(
-                                              Icons.camera_alt,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                  ),*/
 
 }
