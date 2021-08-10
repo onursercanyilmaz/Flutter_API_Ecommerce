@@ -99,7 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     padding: const EdgeInsets.only(
                                         left: 30, right: 30),
                                     color: const Color(0xffCC222B),
-                                    child: TextFormField(
+                                    child: TextField(
+                                      autofocus: true,
                                       keyboardType: TextInputType.name,
                                       controller: _emailController,
                                       cursorColor: Colors.white,
@@ -111,57 +112,45 @@ class _LoginScreenState extends State<LoginScreen> {
                                               color: Color(0xffff9898)),
                                           filled: true,
                                           fillColor: Color(0xffCC222B),
-                                          focusColor: Color(0xffCC222B),
-                                          hoverColor: Color(0xffe55c63),
-                                          border: InputBorder.none,
-                                          enabledBorder: InputBorder.none,
                                           contentPadding: EdgeInsets.only(
                                               left: 15,
                                               bottom: 11,
                                               top: 11,
                                               right: 15),
-                                          hintText: "Email"),
+                                          hintText: "Kullanıcı Adı"),
                                     )),
                               ),
                             )),
                         Padding(
                             padding: const EdgeInsets.only(top: 100),
-                            child: Align(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 30, right: 30),
-                                    padding: const EdgeInsets.only(
-                                        left: 30, right: 30),
-                                    color: const Color(0xffCC222B),
-                                    child: TextFormField(
-                                      obscureText: true,
-                                      keyboardType:
-                                          TextInputType.visiblePassword,
-                                      controller: _passwordController,
-                                      cursorColor: Colors.white,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                      decoration: const InputDecoration(
-                                          hintStyle: TextStyle(
-                                              color: Color(0xffff9898)),
-                                          filled: true,
-                                          fillColor: Color(0xffCC222B),
-                                          focusColor: Color(0xffCC222B),
-                                          hoverColor: Color(0xffe55c63),
-                                          border: InputBorder.none,
-                                          enabledBorder: InputBorder.none,
-                                          contentPadding: EdgeInsets.only(
-                                              left: 15,
-                                              bottom: 11,
-                                              top: 11,
-                                              right: 15),
-                                          hintText: "Şifre"),
-                                    )),
-                              ),
-                            )),
+                            child: Container(
+                                margin: const EdgeInsets.only(
+                                    left: 30, right: 30),
+                                padding: const EdgeInsets.only(
+                                    left: 30, right: 30),
+                                color: const Color(0xffCC222B),
+                                child: TextField(
+                                  autofocus: true,
+                                  obscureText: true,
+                                  keyboardType:
+                                      TextInputType.visiblePassword,
+                                  controller: _passwordController,
+                                  cursorColor: Colors.white,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  decoration: const InputDecoration(
+                                      hintStyle: TextStyle(
+                                          color: Color(0xffff9898)),
+                                      filled: true,
+                                      fillColor: Color(0xffCC222B),
+                                      contentPadding: EdgeInsets.only(
+                                          left: 15,
+                                          bottom: 11,
+                                          top: 11,
+                                          right: 15),
+                                      hintText: "Şifre"),
+                                ))),
                       ],
                     ),
                     const SizedBox(

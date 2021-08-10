@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:ecommerceosy/tabs/products_tab.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../main_screen.dart';
+
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({Key? key}) : super(key: key);
@@ -147,7 +149,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             padding: const EdgeInsets.only(left: 30, right: 30),
                             color: const Color(0xffCC222B),
                             child: TextFormField(
-                              keyboardType: TextInputType.name,
+                              autofocus: true,
                               controller: _nameController,
                               cursorColor: Colors.white,
                               style: const TextStyle(
@@ -158,13 +160,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                       TextStyle(color: Color(0xffff9898)),
                                   filled: true,
                                   fillColor: Color(0xffCC222B),
-                                  focusColor: Color(0xffCC222B),
-                                  hoverColor: Color(0xffe55c63),
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
+
                                   contentPadding: EdgeInsets.only(
                                       left: 15, bottom: 11, top: 11, right: 15),
                                   hintText: "Ürün Adı"),
@@ -182,7 +178,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                       left: 30, right: 30),
                                   color: const Color(0xffCC222B),
                                   child: TextFormField(
-                                    keyboardType: TextInputType.name,
+                                   autofocus: true,
                                     controller: _priceController,
                                     cursorColor: Colors.white,
                                     style: const TextStyle(
@@ -256,7 +252,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
         myToken.toString(), _priceController.text, _nameController.text, getBase64FormateFile(imagePath) )
         .then((value) {
 
-       Navigator.pop(context);
+      Navigator.of(context)
+          ..pop();
     }).catchError((err) {
       print("HATA " + err.toString());
 

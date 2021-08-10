@@ -89,6 +89,29 @@ class ProductApi {
 
     print("ENCODEDIMAGE------->>>  "+ encodedImage.toString());
 
+    var fistUpdateJson = json.decode("{"
+        "\"data\": {"
+        "\"code\": \"$code\","
+        "\"name\": \"$name\","
+        "\"mainImage\": {"
+        "\"document\": \"${null}\","
+        "\"items\": []"
+        "}"
+        "}"
+        "}"
+    );
+
+    final url = Uri.parse(
+        'https://jptest.diyalogo.com.tr/logo/rest/v1.0/mmitemexchanges/$productId');
+    final firsUpdate = await http.put(
+      url,
+      headers: {
+        'content-type': 'application/json; charset=UTF-8',
+        'Auth-Token': encodedAuthKey
+      },
+      body: json.encode(fistUpdateJson['data']),
+    );
+
     var updateJson = json.decode("{"
         "\"data\": {"
         "\"code\": \"$code\","
@@ -101,9 +124,7 @@ class ProductApi {
         "}"
     );
 
-    final url = Uri.parse(
-        'https://jptest.diyalogo.com.tr/logo/rest/v1.0/mmitemexchanges/$productId');
-    final update = await put(
+    final update = await http.put(
       url,
       headers: {
         'content-type': 'application/json; charset=UTF-8',
@@ -111,6 +132,7 @@ class ProductApi {
       },
       body: json.encode(updateJson['data']),
     );
+
 
     print(update.body);
     print("UPDATE STATUS CODE----->>>>" + update.statusCode.toString());

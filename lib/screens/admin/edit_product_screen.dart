@@ -19,8 +19,12 @@ class EditProductScreen extends StatefulWidget {
 }
 
 class _EditProductScreenState extends State<EditProductScreen> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _priceController = TextEditingController();
+
+
+
+
+  final TextEditingController _nameController = TextEditingController( );
+  final TextEditingController _priceController = TextEditingController( );
 
   String imagePath = "";
   final _picker = ImagePicker();
@@ -160,8 +164,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             padding: const EdgeInsets.only(left: 30, right: 30),
                             color: const Color(0xffCC222B),
                             child: TextFormField(
-                             // initialValue: widget.product.title,
-                              keyboardType: TextInputType.name,
+                              autofocus: true,
+                             //initialValue: widget.product.title,
                               controller: _nameController,
                               cursorColor: Colors.white,
                               style: const TextStyle(
@@ -172,12 +176,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                       TextStyle(color: Color(0xffff9898)),
                                   filled: true,
                                   fillColor: Color(0xffCC222B),
-                                  hoverColor: Color(0xffe55c63),
-                                  border: InputBorder.none,
-
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
                                   contentPadding: EdgeInsets.only(
                                       left: 15, bottom: 11, top: 11, right: 15),
                                   hintText: "Ürün Adı"),
@@ -194,9 +192,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                   padding: const EdgeInsets.only(
                                       left: 30, right: 30),
                                   color: const Color(0xffCC222B),
-                                  child: TextFormField(
-                                    //initialValue: widget.product.price.toString(),
-                                    keyboardType: TextInputType.name,
+                                  child: TextField(
+
+                                    autofocus: true,
                                     controller: _priceController,
                                     cursorColor: Colors.white,
                                     style: const TextStyle(
@@ -207,89 +205,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                             TextStyle(color: Color(0xffff9898)),
                                         filled: true,
                                         fillColor: Color(0xffCC222B),
-                                        focusColor: Color(0xffCC222B),
-                                        hoverColor: Color(0xffe55c63),
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
                                         contentPadding: EdgeInsets.only(
                                             left: 15,
                                             bottom: 11,
                                             top: 11,
                                             right: 15),
-                                        hintText: "Ürün Fiyatı"),
+                                        hintText: "Ürün Fiyatı"
+                                      ),
                                   )),
                             ),
                           )),
-                      /* Padding(
-                          padding: const EdgeInsets.only(top: 100),
-                          child: Align(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Container(
-                                  margin: const EdgeInsets.only(
-                                      left: 30, right: 30),
-                                  padding: const EdgeInsets.only(
-                                      left: 30, right: 30),
-                                  color: const Color(0xffCC222B),
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.name,
-                                    controller: _passwordController,
-                                    cursorColor: Colors.white,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                    decoration: const InputDecoration(
-                                        hintStyle:
-                                            TextStyle(color: Color(0xffff9898)),
-                                        filled: true,
-                                        fillColor: Color(0xffCC222B),
-                                        focusColor: Color(0xffCC222B),
-                                        hoverColor: Color(0xffe55c63),
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        contentPadding: EdgeInsets.only(
-                                            left: 15,
-                                            bottom: 11,
-                                            top: 11,
-                                            right: 15),
-                                        hintText: "Stok Adedi"),
-                                  )),
-                            ),
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(top: 150),
-                          child: Align(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Container(
-                                  margin: EdgeInsets.only(left: 30, right: 30),
-                                  padding: EdgeInsets.only(left: 30, right: 30),
-                                  color: const Color(0xffCC222B),
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.name,
-                                    controller: _phoneController,
-                                    cursorColor: Colors.white,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                    decoration: const InputDecoration(
-                                        hintStyle:
-                                            TextStyle(color: Color(0xffff9898)),
-                                        filled: true,
-                                        fillColor: Color(0xffCC222B),
-                                        focusColor: Color(0xffCC222B),
-                                        hoverColor: Color(0xffe55c63),
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        contentPadding: EdgeInsets.only(
-                                            left: 15,
-                                            bottom: 11,
-                                            top: 11,
-                                            right: 15),
-                                        hintText: "Kategori"),
-                                  )),
-                            ),
-                          )),*/
                     ],
                   ),
                   const SizedBox(
@@ -334,12 +259,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
         ));
   }
 
+
   void updateShortCut() {
     ProductApi.updateProduct(
             myToken.toString(), _priceController.text, _nameController.text,  getBase64FormateFile(imagePath), widget.product.id.toString())
         .then((value) {
 
-         Navigator.pop(context);
+
+      Navigator.of(context)
+        ..pop()
+        ..pop();
 
     }).catchError((err) {
       print("HATA " + err.toString());
@@ -379,29 +308,5 @@ class _EditProductScreenState extends State<EditProductScreen> {
     print("BYTES---->> "+fileInByte.toString());
     return fileInBase64;
   }
-
-  /*showImage(product) {
-    if (imagePath != "" && product.image != null) {
-      imagePath = dataFromBase64String(product.image).toString();
-      return Image.memory(
-        dataFromBase64String(product.image), //Düzenlenecek ürünün resmini gösterir.
-        alignment: Alignment.topCenter,
-        scale: 2,
-      );
-    } else {
-      return Container(
-        decoration: BoxDecoration(
-            color: Colors.redAccent, borderRadius: BorderRadius.circular(100)),
-        width: 500,
-        height: 500,
-        child: const Icon(
-          Icons.camera_alt,
-          color: Colors.white,
-        ),
-      );
-    }
-  }*/
-
-
 
 }

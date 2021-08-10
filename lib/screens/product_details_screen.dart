@@ -316,19 +316,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: Wrap(
                 children: [
                   ListTile(
-                      title: const Text('Sepete Eklendi',
+                      title: const Text("Sepete Eklendi",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
                           )),
-                      onTap: () {
-                        Navigator.pop(context);
+                      onTap: (){
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MainScreen(4),
+                              builder: (context) =>
+                                  MainScreen(4),
                             ));
-                      }),
+                      },),
+
                 ],
               ),
             ),

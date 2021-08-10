@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:core';
 
+import 'package:ecommerceosy/blocs/product_bloc.dart';
 import 'package:ecommerceosy/models/category.dart';
 import 'package:ecommerceosy/models/product.dart';
 import 'package:ecommerceosy/services/api/product_api.dart';
@@ -24,20 +25,13 @@ class ProductsTab extends StatefulWidget {
 }
 
 class _ProductsTabState extends State<ProductsTab>{
-
-  List<Category> categories = <Category> [];
-  List<Widget> categoryWidgets = <Widget>[];
   List<Product> products = <Product>[];
 
 
   @override
   void initState() {
-    getPro();
-    setState(() {
-      myToken = widget.token;
-    });
-
-
+    //getProducts();
+    myToken = widget.token;
     super.initState();
   }
 
@@ -45,14 +39,15 @@ class _ProductsTabState extends State<ProductsTab>{
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff1D2F75),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Container(
-          child:
-          ProductListWidget(products),
+      body:
+           Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              child:showProducts(),
 
-        ),
-      ),
+            ),
+          ),
+
     );
   }
 
@@ -66,50 +61,22 @@ class _ProductsTabState extends State<ProductsTab>{
     });
   }
 
-  /*void getProductss() {
-    _productApi.getProducts().then((response) {
-
-      print("RESPONSE----->>>"+ response.toString());
-
-      if(mounted)
-        {setState(() {
-          Iterable list = json.decode(response.body)['data'];
-          products =
-              list.map((product) => Product.formJson(product)).toList();
-
-
-        });}
-
-    });
-  }*/
-
- /* static Future getProducts()
+  showProducts()
   {
-  var authToken = "61:" + myToken.toString() + ":" + "INTERNALUSER";
-  Codec<String, String> stringToBase64 = utf8.fuse(base64);
-  String productEncoded = stringToBase64.encode(authToken);
+    return FutureBuilder(
+        future: getProducts(),
+        builder: (context, snapshot) {
+          return ProductListWidget(products);
 
-  print("AUTHTOKEN----->" + productEncoded);
-  final getUrl = Uri.parse(
-      'https://jptest.diyalogo.com.tr/logo/rest/v1.0/mmitemexchanges?offset=0&limit=100&direction=desc&expandlevel=25');
-  final response =  http.get(
-  getUrl,
-  headers: {
-  "content-type": "application/json",
-  "Auth-Token": productEncoded ,
-  },
 
-  );
+        }
+    );
+  }
 
-  print("RESPONSE MU ------>>>>>>>>>"+ response.toString());
-  return response;
-
-}*/
-
-void getPro()
+ getProducts ()
 {
 
-   ProductApi.getProducts().then((response) {
+  productBloc.getAll().then((response) {
 
     if(mounted)
     {
