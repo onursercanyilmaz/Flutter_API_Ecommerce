@@ -7,7 +7,7 @@
 - After Navigator.pop(context), provided to refresh page by using FutureBuilder.
 - BLOC patern used for coordination.
 - CRUD operations applied.
--  
+
 
 ## ScreenShots
 
